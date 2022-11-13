@@ -32,7 +32,7 @@ public class ClienteController {
 
     @GetMapping("{id}")
     public Cliente findById(@PathVariable Integer id){
-        return repository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return repository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não ecnontrado!"));
     }
     @GetMapping
     public List<Cliente> findAll(){
