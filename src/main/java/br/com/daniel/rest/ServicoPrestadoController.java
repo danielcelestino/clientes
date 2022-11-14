@@ -20,7 +20,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/servicos-prestados")
-@CrossOrigin("http://localhost:4200")
 @RequiredArgsConstructor  //Ele instancia como @autowired todos atributos como final
 public class ServicoPrestadoController {
 
