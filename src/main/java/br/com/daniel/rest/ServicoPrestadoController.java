@@ -46,6 +46,14 @@ public class ServicoPrestadoController {
         return servicoPrestadoRepository.save(servicoPrestado);
     }
 
+    public List<ServicoPrestado> pesquisar(
+            @RequestParam(value = "nome", required = false, defaultValue = "") String nome,
+            @RequestParam(value = "mes", required = false) Integer mes
+    ){
+        return servicoPrestadoRepository.findByNomeClienteAndMes("%"+nome+"%", mes);
+
+    }
+
 //    @GetMapping("{id}")
 //    public ServicoPrestado findById(@PathVariable Integer id){
 //        return servicoPrestadoRepository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Serviço Prestado não encontrado!"));
