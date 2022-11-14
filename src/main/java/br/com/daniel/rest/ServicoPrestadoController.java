@@ -30,7 +30,7 @@ public class ServicoPrestadoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ServicoPrestado salvar(@RequestBody ServicoPrestadoDTO dto){
+    public ServicoPrestado salvar(@RequestBody @Valid ServicoPrestadoDTO dto){
         LocalDate data =LocalDate.parse(dto.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         Optional<Cliente> opCliente = clienteRepository.findById(dto.getIdCliente());
