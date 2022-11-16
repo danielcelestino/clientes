@@ -33,24 +33,32 @@ public class ServicoPrestadoController {
     public ServicoPrestado salvar(@RequestBody @Valid ServicoPrestadoDTO dto){
         LocalDate data =LocalDate.parse(dto.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        Optional<Cliente> opCliente = clienteRepository.findById(dto.getIdCliente());
+        Optional<Cliente> opCliente = clienteRepository.findById(dto.getCliente().getId());
         Cliente cliente = opCliente.orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST,"Cliente Inexistente!"));
 
         ServicoPrestado servicoPrestado = new ServicoPrestado();
         servicoPrestado.setDescricao(dto.getDescricao());
         servicoPrestado.setData(data);
         servicoPrestado.setCliente(cliente);
-        servicoPrestado.setValor(bigDecimalConverter.converter(dto.getPreco()));
+        servicoPrestado.setValor(bigDecimalConverter.converter(dto.getValor()));
 
         return servicoPrestadoRepository.save(servicoPrestado);
     }
 
+    @GetMapping
     public List<ServicoPrestado> pesquisar(
             @RequestParam(value = "nome", required = false, defaultValue = "") String nome,
             @RequestParam(value = "mes", required = false) Integer mes
     ){
-        return servicoPrestadoRepository.findByNomeClienteAndMes("%"+nome+"%", mes);
-
+        if(nome.isEmpty() && mes==null) {
+            return servicoPrestadoRepository.findAll();
+        }else if (nome.isEmpty() && mes!=null){
+            return servicoPrestadoRepository.findByMes(mes);
+        }else if(!nome.isEmpty() && mes==null){
+            return servicoPrestadoRepository.findByNomeCliente("%" + nome + "%");
+        }else {
+            return servicoPrestadoRepository.findByNomeClienteAndMes("%" + nome + "%", mes);
+        }
     }
 
 //    @GetMapping("{id}")

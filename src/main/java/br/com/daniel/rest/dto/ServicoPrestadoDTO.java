@@ -1,5 +1,6 @@
 package br.com.daniel.rest.dto;
 
+import br.com.daniel.model.entity.Cliente;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,11 +17,11 @@ public class ServicoPrestadoDTO {
     private String descricao;
 
     @NotEmpty(message = "{campo.servico.valor.obrigatorio}")
-    private String preco;
+    private String valor;
 
     @NotEmpty(message = "{campo.servico.data.obrigatorio}")
     private String data;
 
     @NotNull(message = "{campo.servico.cliente.obrigatorio}")
-    private Integer idCliente;
+    private Cliente Cliente;
 }
