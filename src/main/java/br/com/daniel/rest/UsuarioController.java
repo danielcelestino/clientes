@@ -2,10 +2,13 @@ package br.com.daniel.rest;
 
 import br.com.daniel.model.entity.Usuario;
 import br.com.daniel.model.repository.UsuarioRepository;
+import br.com.daniel.rest.exceptions.UsuarioCadastradoException;
+import br.com.daniel.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 //import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
@@ -14,7 +17,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UsuarioController {
 
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 //    private final PasswordEncoder passwordEncoder;
 
     @PostMapping
@@ -22,7 +25,11 @@ public class UsuarioController {
     public void salvar(@RequestBody @Valid Usuario usuario) {
 //        String senhaCript = passwordEncoder.encode(usuario.getPassword());
 //        usuario.setPassword(senhaCript);
-        usuarioRepository.save(usuario);
+        try {
+            usuarioService.salvar(usuario);
+        }catch (UsuarioCadastradoException ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+        }
     }
 
     @PostMapping
@@ -31,6 +38,6 @@ public class UsuarioController {
     public void autenticar(@RequestBody @Valid Usuario usuario) {
 //        String senhaCript = passwordEncoder.encode(usuario.getPassword());
 //        usuario.setPassword(senhaCript);
-        usuarioRepository.save(usuario);
+        usuarioService.autenticar(usuario);
     }
 }

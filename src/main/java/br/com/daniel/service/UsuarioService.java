@@ -11,6 +11,7 @@ package br.com.daniel.service;
 
 import br.com.daniel.model.entity.Usuario;
 import br.com.daniel.model.repository.UsuarioRepository;
+import br.com.daniel.rest.exceptions.UsuarioCadastradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,5 +34,17 @@ public class UsuarioService implements UserDetailsService {
                 .username(usuario.getUsername())
                 .password(usuario.getPassword())
                 .roles("USER").build();
+    }
+
+    public Usuario salvar(Usuario usuario){
+        boolean exists = usuarioRepository.existsByUsername(usuario.getUsername());
+        if(exists){
+            throw new UsuarioCadastradoException(usuario.getUsername());
+        }
+        return usuarioRepository.save(usuario);
+    }
+
+    public void autenticar(Usuario usuario) {
+
     }
 }
