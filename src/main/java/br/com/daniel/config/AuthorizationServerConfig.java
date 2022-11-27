@@ -52,7 +52,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //                .accessTokenValiditySeconds(1800);
 
 
-        clients.inMemory().withClient("my-angular-app").secret("@321")
+        clients.inMemory()
+                .withClient("my-angular-app")
+                .secret("@321")
                 .scopes("read", "write")
                 .authorizedGrantTypes("password")
                 .accessTokenValiditySeconds(1800);

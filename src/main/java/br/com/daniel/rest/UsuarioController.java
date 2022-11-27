@@ -1,12 +1,10 @@
 package br.com.daniel.rest;
 
 import br.com.daniel.model.entity.Usuario;
-import br.com.daniel.model.repository.UsuarioRepository;
 import br.com.daniel.rest.exceptions.UsuarioCadastradoException;
 import br.com.daniel.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 

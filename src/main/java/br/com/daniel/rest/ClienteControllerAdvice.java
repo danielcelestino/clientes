@@ -43,7 +43,7 @@ public class ClienteControllerAdvice {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity handleResponseStatusException(ResponseStatusException ex){
-        String msgErro = ex.getMessage();
+        String msgErro = ex.getReason();
         HttpStatus codigoStatus = ex.getStatus();
         ApiErrors apiErrors = new ApiErrors(msgErro);
         return new ResponseEntity(apiErrors, codigoStatus);
